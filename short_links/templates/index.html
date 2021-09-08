@@ -5,5 +5,10 @@
 {% endblock %}
 
 {% block content %}
-Контент
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="link" placeholder="Длинная ссылка">
+    <input type="text" name="slug" placeholder="Свой слаг">
+    <button class="button">Получить ссылку</button>
+</form>
 {% endblock %}
