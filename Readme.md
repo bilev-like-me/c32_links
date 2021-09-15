@@ -34,5 +34,21 @@ CACHES_TTL = 600
 }
 ```
 
+Генерация уникальных коротких ссылок __subpart__ выполнена при помощи библиотеки __Hashid__, эти данные одновременно используются, как поле __id__ в БД.
 
-
+Конфиденциальные данные вынесены в отдельные файлы в корне проекти:
+```my_secrets.py``` - секретный ключ Django и добавочные данные для формирования хешей коротких ссылок:
+```
+SECRET_KEY = "< very-secret-string #1 >"
+HASHID_FIELD_SALT = "< very-secret-string #2 >"
+```
+```mysql.cnf``` - настройки и данные для доступа к БД:
+```
+[client]
+database = db_mane
+user = db_user
+password = db_user_password
+default-character-set = utf8
+host = db # имя контейнера Docker в БД
+port = 3306
+```
