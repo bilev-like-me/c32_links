@@ -1,0 +1,7 @@
+[client]
+database = db_mane
+user = db_user
+password = db_user_password
+default-character-set = utf8
+host = db
+port = 3306
