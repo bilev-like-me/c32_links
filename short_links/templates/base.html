@@ -3,9 +3,78 @@
     <head>
         <meta charset="utf-8">
         <title>{% block title %}{% endblock %}</title>
+        <style>
+            .outer {
+                display: flex;
+                height: 500px;
+            }
+
+            .inner {
+                width: 1000px;
+                margin: auto;
+                align-items: center;
+            }
+            .inputs {
+                text-align: center;
+                width: auto;
+            }
+            .long_link {
+                width: 50%;
+            }
+            .error {
+                text-align: center;
+                color: red;
+                font-size: 12;
+            }
+            table {
+                width: 1000px;
+                border: 3px solid black;
+                border-collapse: collapse;
+            }
+            table a {
+                text-decoration: none; /* Убирает подчеркивание для ссылок */
+            } 
+            table a:hover { 
+                text-decoration: underline; /* Добавляем подчеркивание при наведении курсора на ссылку */
+                color:darkgreen; /* Ссылка красного цвета */
+            } 
+            th {
+                background-color:#4CAF50;
+                color: white;
+            }
+            tr, td {
+                border-bottom: 1px solid grey;
+                padding: 10px 15px;
+            }
+            .paginator {
+                text-align: center;
+            }
+            ul.pagination {
+                display: inline-block;
+                padding: 0;
+                margin: 0;
+            }
+            ul.pagination li {
+                display: inline;
+            }
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            ul.pagination li a {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+            }
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+
+        </style>
     </head>
     <body>
-        <div>
+        <div class="outer">
             {% block content %}{% endblock %}
         </div>
     </body>

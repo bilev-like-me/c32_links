@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    restart: always
+    container_name: 'app_redis'
+    command: redis-server
+    ports:
+      - '6379:6379'
+  web:
+    build: .
+    restart: always
+    container_name: 'app_django'
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/c32
+    ports:
+      - '8000:8000'
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: 'short_links'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'VhfnEnf7'
+      MYSQL_ROOT_PASSWORD: '10rvNxU0!F$LalzqDOI4pG4'
+    restart: always
+    volumes:
+      - ./db_django:/var/lib/mysql
+  celery:
+    build: .
+    container_name: 'app_celery'
+    command: celery -A links worker -B
+    volumes:
+      - .:/c32
+    links:
+      - redis
+      - web
+    depends_on:
+      - web
+      - redis

@@ -1,4 +1,7 @@
 **/__pycache__/**
 **/migrations/**
-/secrets.py
+/my_secrets.py
 /mysql.cnf
+celerybeat*
+debug.log
+db_django/

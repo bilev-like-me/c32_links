@@ -5,10 +5,64 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    <input type="text" name="link" placeholder="Длинная ссылка">
-    <input type="text" name="slug" placeholder="Свой слаг">
-    <button class="button">Получить ссылку</button>
-</form>
+<div  class="inner">
+    {% for message in messages %}
+        <div class="error">
+            ОШИБКА: {{ message }}
+        </div>
+    {% endfor %}
+    <br>
+    <div>
+        <form method="POST" class="inputs">
+            {% csrf_token %}
+            <input class="long_link" type="text" name="link" placeholder="Длинная ссылка">
+            <input type="text" name="subpart" placeholder="Свой короткий путь">
+            <button class="button">Получить ссылку</button>
+        </form>
+    </div>
+    <br>
+    <div>
+        <table class="table">
+            <tr>
+                <th>Короткая ссылка</th>
+                <th>Длинная ссылка</th>
+                <th>Время создания</th>
+            </tr>    
+            {% for sl in page_obj %}
+                {% if sl.session_id == request.session.session_key %}
+                    <tr>
+                        <td width=200><a href="{{ sl.user_subpart }}">{{ request.get_host }}/{{ sl.user_subpart }}</a></td>
+                        <td width=500>{{ sl.long_link }}</td>
+                        <td width=300 align="center">{{ sl.date_time|date:'Y-m-d H:i' }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    <br>
+    <div class="paginator">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">«</a></li>
+            {% else %}
+                <li><a>«</a></li>
+            {% endif %}            
+            
+            {% for page in page_obj.paginator.page_range %}
+                    <li><a 
+                    {% if page_obj.number == page %}
+                            class="active" 
+                    {% endif %}
+                    href="?page={{ page }}">{{ page }}</a></li>
+            
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">»</a></li>
+            {% else %}            
+                <li><a>»</a></li>
+            {% endif %}      
+        </ul>
+    </div>
+</div>
 {% endblock %}
